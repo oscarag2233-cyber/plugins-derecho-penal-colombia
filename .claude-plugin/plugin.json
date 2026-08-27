@@ -1,0 +1,18 @@
+{
+  "name": "derecho-penal-colombia",
+  "version": "0.1.0",
+  "description": "Asistente de investigación, análisis y redacción para derecho penal colombiano, con verificación de vigencia normativa y jurisprudencia oficial.",
+  "author": {
+    "name": "Oscar Gutiérrez Saavedra"
+  },
+  "homepage": "https://github.com/oscarag2233-cyber/plugins-derecho-penal-colombia",
+  "repository": "https://github.com/oscarag2233-cyber/plugins-derecho-penal-colombia",
+  "license": "MIT",
+  "keywords": [
+    "derecho penal",
+    "Colombia",
+    "Ley 599 de 2000",
+    "Ley 906 de 2004",
+    "jurisprudencia"
+  ]
+}
