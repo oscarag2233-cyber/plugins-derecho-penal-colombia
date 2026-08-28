@@ -1,0 +1,22 @@
+{
+  "name": "derecho-penal-colombia-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Servidor MCP de consulta de fuentes oficiales de derecho penal colombiano para ChatGPT y Codex.",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js",
+    "inspect": "npx @modelcontextprotocol/inspector@latest"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.20.2",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/inspector": "^0.16.5"
+  }
+}

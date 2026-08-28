@@ -38,6 +38,12 @@ No sustituye el criterio profesional, la revisión del expediente ni la consulta
 - `/verificar-vigencia`: audita normas, reformas y decisiones de constitucionalidad.
 - `/escrito-penal`: genera un borrador de escrito o intervención procesal.
 
+### Compatibilidad con ChatGPT
+
+El repositorio también contiene un servidor MCP compatible con el ecosistema de Plugins de OpenAI. Expone un endpoint `/mcp` y las herramientas de solo lectura `search` y `fetch`, con esquemas de salida y anotaciones explícitas. La guía de preparación está en [SUBMISSION.md](SUBMISSION.md) y los datos para el portal en [chatgpt-app-submission.json](chatgpt-app-submission.json).
+
+El repositorio por sí solo no constituye un despliegue público. Para un envío al directorio se necesita publicar `server.js` detrás de HTTPS estable, contar con URLs públicas de sitio, soporte, privacidad y términos, verificar la identidad del editor en OpenAI Platform y completar la revisión en el portal.
+
 ## Fuentes prioritarias
 
 1. Constitución Política y tratados de derechos humanos ratificados por Colombia.

@@ -1,0 +1,22 @@
+name: Validate plugin and MCP server
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: node -e "JSON.parse(require('fs').readFileSync('chatgpt-app-submission.json', 'utf8'))"
+      - run: test "$(find skills -name SKILL.md | wc -l | tr -d ' ')" -eq 5
+      - run: test "$(find agents -name '*.md' | wc -l | tr -d ' ')" -eq 4
+      - run: test "$(find commands -name '*.md' | wc -l | tr -d ' ')" -eq 4

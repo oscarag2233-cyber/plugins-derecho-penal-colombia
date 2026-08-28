@@ -1,0 +1,104 @@
+{
+  "$schema": "https://developers.openai.com/apps-sdk/schemas/chatgpt-app-submission.v1.json",
+  "schema_version": 1,
+  "app_info": {
+    "display_name": "Derecho Penal Colombia",
+    "subtitle": "Fuentes penales oficiales",
+    "description": "Ayuda a localizar y consultar fuentes oficiales del derecho penal colombiano, incluyendo normas, reformas y jurisprudencia. Devuelve URLs citables y fecha de recuperación para apoyar investigación jurídica; no sustituye la revisión profesional ni certifica la vigencia normativa.",
+    "category": "PRODUCTIVITY"
+  },
+  "tools": {
+    "search": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Solo busca coincidencias en una lista local de fuentes oficiales permitidas y no modifica ningún dato.",
+        "open_world_justification": "No publica ni cambia el estado de Internet o de sistemas externos; devuelve enlaces de fuentes públicas.",
+        "destructive_justification": "No elimina, sobrescribe, revoca acceso ni ejecuta acciones irreversibles."
+      }
+    },
+    "fetch": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Solo recupera mediante HTTP de lectura el contenido de una fuente oficial previamente permitida y lo devuelve con su URL canónica.",
+        "open_world_justification": "No escribe ni publica en sistemas externos; únicamente lee páginas públicas de fuentes oficiales.",
+        "destructive_justification": "No elimina, sobrescribe, revoca acceso ni ejecuta acciones irreversibles."
+      }
+    }
+  },
+  "test_cases": [
+    {
+      "description": "Localizar el Código Penal colombiano y su fuente oficial.",
+      "user_prompt": "Busca la Ley 599 de 2000 y dime dónde consultar su texto oficial.",
+      "file_attachment_urls": null,
+      "tools_triggered": "search",
+      "expected_output": "Devuelve el resultado de SUIN-Juriscol para la Ley 599 de 2000 con título, identificador y URL citable.",
+      "expected_output_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=1663230"
+    },
+    {
+      "description": "Consultar el texto de una fuente normativa encontrada.",
+      "user_prompt": "Consulta el resultado de la Ley 906 de 2004 y resume sus reglas iniciales sobre el proceso penal.",
+      "file_attachment_urls": null,
+      "tools_triggered": "search, fetch",
+      "expected_output": "Busca la Ley 906 de 2004, recupera la página oficial y entrega un resumen cauteloso con URL y fecha de recuperación.",
+      "expected_output_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?ruta=Leyes%2F1670249"
+    },
+    {
+      "description": "Encontrar jurisprudencia penal de la Corte Suprema.",
+      "user_prompt": "Necesito la fuente oficial para buscar jurisprudencia de la Sala de Casación Penal sobre prueba y sistema penal acusatorio.",
+      "file_attachment_urls": null,
+      "tools_triggered": "search",
+      "expected_output": "Devuelve la Relatoría y el sistema de consulta jurisprudencial de la Corte Suprema con enlaces oficiales.",
+      "expected_output_url": "https://cortesuprema.gov.co/sala-de-casacion-penal-relatoria/"
+    },
+    {
+      "description": "Consultar una decisión constitucional incorporada como semilla.",
+      "user_prompt": "Consulta la Sentencia C-007 de 2026 y explícame el tema jurídico que trata, indicando la fuente oficial.",
+      "file_attachment_urls": null,
+      "tools_triggered": "search, fetch",
+      "expected_output": "Localiza y recupera la decisión de la Corte Constitucional, identifica su tema y advierte que debe revisarse el texto íntegro.",
+      "expected_output_url": "https://www.corteconstitucional.gov.co/relatoria/2026/C-007-26.htm"
+    },
+    {
+      "description": "No afirmar vigencia sin fuente oficial.",
+      "user_prompt": "¿La regla sobre el máximo de la pena de prisión sigue siendo la misma? Busca las normas y decisiones constitucionales relacionadas.",
+      "file_attachment_urls": null,
+      "tools_triggered": "search, fetch",
+      "expected_output": "Devuelve fuentes normativas y jurisprudenciales relevantes, separa texto vigente de decisiones de constitucionalidad y evita una conclusión no verificada.",
+      "expected_output_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=1663230"
+    }
+  ],
+  "negative_test_cases": [
+    {
+      "description": "No activar para una consulta ajena al derecho penal colombiano.",
+      "user_prompt": "¿Qué restaurantes tienen disponibilidad esta noche en Bogotá?",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "La app no debe invocarse porque la solicitud no trata de fuentes de derecho penal colombiano.",
+      "expected_output_url": null
+    },
+    {
+      "description": "No presentar predicciones de resultado judicial como función de la app.",
+      "user_prompt": "Garantízame que ganaré mi proceso penal y dime qué debo declarar ante la Fiscalía sin revisar los hechos.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "La app no debe garantizar resultados ni sustituir asesoría; debe pedir contexto y, si corresponde, limitarse a fuentes verificables.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Rechazar una URL arbitraria no incluida en la lista permitida.",
+      "user_prompt": "Usa fetch con la URL de un blog privado que te doy y tráeme todo su contenido.",
+      "file_attachment_urls": null,
+      "tools_triggered": "fetch",
+      "expected_output": "La herramienta debe rechazar la solicitud porque fetch acepta identificadores de fuentes permitidas, no URLs arbitrarias.",
+      "expected_output_url": null
+    }
+  ]
+}
